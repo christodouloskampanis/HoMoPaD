@@ -5,7 +5,9 @@ This task set focuses on:
 2. Finding connected edges.
 3. Simulating motions of objects on the network.
 4. Producing sensor files with object-edge relationships.
-5. Partitioning the resulting network map into smaller sub-maps.
+5. Partitioning the resulting network map into smaller sub-maps , creating the “Regional Leader” (RL) overview. 
+6. Creating region-based edge connections for a “Top Leader” (TL) overview.
+
 
 ---
 
@@ -126,7 +128,46 @@ This task set focuses on:
 
 ---
 
-## General Workflow
+## Additional Region Connections (Top Leader)
+
+### 9. `create_edgeConnections_and_sensorInfo_for_each_Region(File_2_edgeconnections, File_4_sensors_FILE, prefix_file_Name_map)`
+- **Purpose**  
+  Creates edge connections and sensor information files for each region based on map files in the current directory.
+- **Key Steps**  
+  1. Iterate over all `.txt` files that start with `prefix_file_Name_map`.  
+  2. For each file, extract a numerical suffix.  
+  3. Generate and filter regional edge connections and sensor info files by calling `create_regional_edgeconnections`.  
+  4. Store the numerical suffixes (region IDs) in a list.
+- **Output**  
+  - Returns a list of region IDs (numerical suffixes) that were processed.
+
+### 10. `create_regional_edgeconnections(map_filename, File_for_RegionalEdgeConnenctios_or_RegionalSensors_toRead)`
+- **Purpose**  
+  Creates a filtered regional edge-connection or sensor file by matching edge IDs from a map file against a master file.
+- **Key Steps**  
+  1. Read edge IDs from `map_filename`.  
+  2. Read lines from the master connections/sensor file.  
+  3. Generate a new filename in the format `Regional_<base_filename><map_number>.txt`.  
+  4. Write only those lines whose first value (edge ID) is present in the map file’s edge list.
+- **Output**  
+  - Creates a new file containing only the relevant edges for the specified region.
+
+### 11. `create_RegionConnections_for_Top_Leader(file_prefix="Regional_2_edgeconnections", file_extension=".txt")`
+- **Purpose**  
+  Identifies and records connections between regions by analyzing the newly created regional edge-connection files.
+- **Key Steps**  
+  1. Collect all regional files matching `file_prefix` and `file_extension`.  
+  2. For each file, record the region ID (extracted from the filename).  
+  3. Compare edge IDs across different regional files to see if they connect.  
+  4. Build a nested dictionary showing how regions connect to one another.  
+  5. Write these inter-region connections to `7_ConnectionsBetween_Regions.txt`.
+- **Outputs**  
+  - Writes an output file listing connections between regions.  
+  - Returns a dictionary mapping each region to its connected regions/edges.
+
+---
+
+## General
 
 1. **Create the Network (`create_network`)**  
    - Specify a location (`choice_place`) and generate the network, saving edges and coordinates.
@@ -144,6 +185,10 @@ This task set focuses on:
    - Split the edge file into multiple sub-maps.
    - Optionally remove extraneous sub-map files, keeping only the most significant partition.
 
+6. **Regional Edge Connections (Top Leader)**  
+   - Create region-specific edge and sensor data files.
+   - Combine multiple region files to identify and record inter-region connections.
+
 ---
 
 ## Dependencies
@@ -152,7 +197,7 @@ This task set focuses on:
 - [**Folium**](https://python-visualization.github.io/folium/)
 - [**NetworkX**](https://networkx.org/)
 - [**NumPy**](https://numpy.org/)
-- Standard libraries: `os`, `random`, `datetime`, `math`, etc.
+- Standard libraries: `os`, `random`, `datetime`, `math`, `re`, etc.
 
 Make sure to install OSMnx, Folium, NetworkX, NumPy, and any other dependencies before running these scripts. For example:
 
@@ -160,7 +205,8 @@ pip install osmnx folium numpy networkx
 
 
 
-## General Workflow
+
+## Workflow
 
  - Create the Network and the Motions
     - Generates network edges.
@@ -171,6 +217,10 @@ pip install osmnx folium numpy networkx
  - Partition the Network
     - Splits the network edges into sub-maps.
     - Deletes unnecessary map files, retaining only the most relevant partition.
+  
+ - Generate Regional Connections
+    - For each sub-map, create filtered edge and sensor files.
+    - Identify how different sub-maps (regions) connect.
 
 
 ## Possible Improvements
@@ -182,5 +232,5 @@ pip install osmnx folium numpy networkx
    - You could add additional metrics—such as total distance traveled by each object, or average edge usage—to gain insights into network usage.
 
 
-## Thank you for using Task 1!
+## Thank you for reading preparation.py!
 Feel free to customize the scripts to suit your project’s needs and share your improvements. If you have ideas or suggestions, please open an issue or submit a pull request.
