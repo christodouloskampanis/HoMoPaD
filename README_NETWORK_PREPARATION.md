@@ -26,8 +26,9 @@ This task set focuses on:
     - Deletes unnecessary map files, retaining only the most relevant partition.
   
  3. Generate Regional Connections
-    - For each sub-map, create filtered edge and sensor files.
-    - Identify how different sub-maps (regions) connect.
+    - For each sub-map, create filtered edge and sensor files , creating the “Regional Leader” (RL) Edge Connections.
+    - Identify how different sub-maps (regions) connect, creating the "Top Leader" (TL) edge connections.
+       - The Top Leader is only aware of the edge connections along the borders shared with adjacent regions.
 
 
 ---
