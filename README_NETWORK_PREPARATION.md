@@ -35,6 +35,10 @@ This task set focuses on:
 5. **Map Partitioning**  
    - Recursively split the network map into sub-maps (e.g., left/right) based on X-coordinates.
    - Optionally remove unneeded map files, keeping only the most relevant partitions.
+  
+6.  **Regional/Top Leader's Edge Connections**  
+   - Create region-specific edge and sensor data files - Regional Leader's Edge Connections.
+   - Combine multiple region files to identify and record inter-region connections - Top Leader's Edge Connections .
 
 ---
 
@@ -169,30 +173,6 @@ This task set focuses on:
 
 ---
 
-## General
-
-1. **Create the Network (`create_network`)**  
-   - Specify a location (`choice_place`) and generate the network, saving edges and coordinates.
-
-2. **Find Connected Edges (`find_connected_edges`)**  
-   - Use the saved edge file to build a connectivity file.
-
-3. **Create Motions (`create_motions`)**  
-   - Load the graph, simulate object motions, and write out their traveled paths.
-
-4. **Generate Sensor Data (`write_data_to_sensors_file`)**  
-   - Invert object-based paths to produce edge-based lists of objects.
-
-5. **Partition the Map (`main_partitioning_map_` and Friends)**  
-   - Split the edge file into multiple sub-maps.
-   - Optionally remove extraneous sub-map files, keeping only the most significant partition.
-
-6. **Regional Edge Connections (Top Leader)**  
-   - Create region-specific edge and sensor data files.
-   - Combine multiple region files to identify and record inter-region connections.
-
----
-
 ## Dependencies
 
 - [**OSMnx**](https://osmnx.readthedocs.io/)
@@ -208,7 +188,7 @@ pip install osmnx folium numpy networkx
 
 
 
-## Workflow
+## General Workflow
 
  - Create the Network and the Motions
     - Generates network edges.
