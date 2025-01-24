@@ -36,9 +36,10 @@ This task set focuses on:
    - Recursively split the network map into sub-maps (e.g., left/right) based on X-coordinates.
    - Optionally remove unneeded map files, keeping only the most relevant partitions.
   
-6.  **Regional/Top Leader's Edge Connections**  
-   - Create region-specific edge and sensor data files / Regional Leader's Edge Connections.
-   - Combine multiple region files to identify and record inter-region connections / Top Leader's Edge Connections.
+6. **Regional/Top Leader's Edge Connections**  
+   - Create region-specific edge and sensor data files - Regional Leader's Edge Connections.
+   - Combine multiple region files to identify and record inter-region connections / Top Leader's Edge Connections..
+  
 
 ---
 
