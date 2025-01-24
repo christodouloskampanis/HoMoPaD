@@ -125,7 +125,7 @@ This task set focuses on:
 
 ---
 
-## Additional Region Connections (Top Leader)
+## Create Region(Regional Leader) and Adjacent Regions(Top Leader) Connections 
 
 ### 3_1. `create_edgeConnections_and_sensorInfo_for_each_Region(File_2_edgeconnections, File_4_sensors_FILE, prefix_file_Name_map)`
 - **Purpose**  
