@@ -1,28 +1,36 @@
-# Task 1: Creating the Network and Motions
+# Task 1: Creating the Network, Motions, and Map Partitions
 
-This task focuses on generating a road network from OpenStreetMap data for a specified location, finding connected edges, simulating motions of objects on the network, and finally producing sensor files containing object-edge relationships.
+This task set focuses on:
+1. Generating a road network from OpenStreetMap data for a specified location.
+2. Finding connected edges.
+3. Simulating motions of objects on the network.
+4. Producing sensor files with object-edge relationships.
+5. Partitioning the resulting network map into smaller sub-maps.
 
 ---
 
 ## Overview
 
-1. **Create the Network**: 
-   - Given a geographical bounding box, retrieve road data from OpenStreetMap.
+1. **Create the Network**  
+   - Retrieve road data from OpenStreetMap for a given bounding box (location).
    - Assign weights to edges based on proximity to the center.
-   - Save all edges (with unique IDs, node coordinates, and assigned weights) to a file.
+   - Save edges with unique IDs and coordinates to a file.
 
-2. **Find Connected Edges**:
-   - Based on the generated network file, determine which edges lead into which other edges.
-   - Save this connectivity information to a separate file.
+2. **Find Connected Edges**  
+   - Determine which edges lead directly into which others.
+   - Generate an edge-connection file.
 
-3. **Create Motions**:
-   - Simulate moving objects traveling along connected edges.
-   - Each object is randomly assigned a path of edges.
-   - Save the object-to-edge paths to a file.
+3. **Create Motions**  
+   - Simulate objects traveling across the network, each with a path of connected edges.
+   - Write these object-to-edge paths to a file.
 
-4. **Write Sensor Data**:
-   - Process the paths file and create edge-to-object mappings.
-   - Write these mappings to both a timestamped file (for archival) and a main sensor file.
+4. **Write Sensor Data**  
+   - Convert object-based paths into edge-based lists of objects passing through each edge.
+   - Write these lists to both a timestamped file and a main sensor file.
+
+5. **Map Partitioning**  
+   - Recursively split the network map into sub-maps (e.g., left/right) based on X-coordinates.
+   - Optionally remove unneeded map files, keeping only the most relevant partitions.
 
 ---
 
@@ -30,7 +38,7 @@ This task focuses on generating a road network from OpenStreetMap data for a spe
 
 ### 1. `create_network(File_1_combined_nodes_edges_toWrite, prefix_file_Name_Picture, choice_place)`
 - **Purpose**  
-  Retrieves a road network from OpenStreetMap for a chosen location. Assigns weights to edges according to their proximity to the network’s center.
+  Retrieves a road network from OpenStreetMap for a chosen location. Assigns weights to edges according to proximity to the network’s center.
 - **Key Steps**  
   1. Select bounding box coordinates based on `choice_place`.  
   2. Use **OSMnx** to download the road network within these coordinates.  
@@ -80,35 +88,61 @@ This task focuses on generating a road network from OpenStreetMap data for a spe
 
 ---
 
-## Helper Functions
+## Map Partitioning
 
-1. **`get_coordinates(place_name)`**  
-   - Uses **OSMnx**’s geocoder to retrieve latitude/longitude for a location. (Currently not heavily used in these scripts.)
+### 5. `main_partitioning_map_(File_1_combined_nodes_edges_toRead, prefix_file_Name_map, prefix_file_Name_Regional, prefix_file_Name_Picture, depth)`
+- **Purpose**  
+  Partitions a network map into sub-maps recursively and manages files by keeping only the largest partition.
+- **Key Steps**  
+  1. Determine initial recursion level (`i`) based on `depth`.  
+  2. Call `recursively_map_partition` to do the actual partitioning.  
+  3. Remove unneeded map files, keeping only the partition with the longest numerical suffix.
 
-2. **`rotate_graph(graph, angle)`**  
-   - Rotates the graph’s node coordinates by a given angle in degrees. Useful for aligning the network.
+### 6. `recursively_map_partition(File_1_combined_nodes_edges_toRead, prefix_file_Name_map, depth, i, total_sum_of_lines, numberOfEdgesinInitialFile=None)`
+- **Purpose**  
+  Recursively splits a network map by X-coordinates (left/right) until a specified `depth` is reached.
+- **Key Steps**  
+  1. Read network edges from file.  
+  2. Calculate midpoint (`split_x`), and separate edges into left/right subsets.  
+  3. Write subsets to new files.  
+  4. Recursively process each subset until `depth` is exceeded.
 
-3. **`visualize_network(graph, north, south, east, west, place_name)`**  
-   - Creates and saves an interactive Folium map with the bounding box, center marker, and the OSMnx graph overlay.
-   - Saved as `network_visualization.html`.
+### 7. `partition_data(data, split_x, depth)`
+- **Purpose**  
+  Given a list of edges, partition them into left and right subsets based on a specified `split_x`.
+- **Key Steps**  
+  1. If `depth` = 0, all edges go into the left partition.  
+  2. Otherwise, compare the edge coordinates (`x1`, `x2`) with `split_x` and assign to left or right.  
+  3. Handle edges that cross the midpoint by comparing distances.
+
+### 8. `delete_maps_except_longest()`
+- **Purpose**  
+  Deletes all map files in the current directory except those with the largest numerical suffix and any explicitly specified files to keep.
+- **Key Steps**  
+  1. Collect all files starting with `"map"`.  
+  2. Determine the suffix length (excluding `"map"` and `".txt"`).  
+  3. Keep only files with the longest suffix (plus optional files).  
+  4. Delete the rest.
 
 ---
 
 ## General Workflow
 
 1. **Create the Network (`create_network`)**  
-   - Specify a location (`choice_place`) to define bounding box coordinates.  
-   - Generate the network and save its edges.
+   - Specify a location (`choice_place`) and generate the network, saving edges and coordinates.
 
 2. **Find Connected Edges (`find_connected_edges`)**  
-   - Use the saved edge file to determine connectivity and produce a connectivity file.
+   - Use the saved edge file to build a connectivity file.
 
 3. **Create Motions (`create_motions`)**  
-   - Load the graph and edge details, simulate objects traversing the edges, and write motions to file.
+   - Load the graph, simulate object motions, and write out their traveled paths.
 
 4. **Generate Sensor Data (`write_data_to_sensors_file`)**  
-   - Convert object-based motions into edge-based lists of objects.  
-   - Save results to a main sensor file and a timestamped archival file.
+   - Invert object-based paths to produce edge-based lists of objects.
+
+5. **Partition the Map (`main_partitioning_map_` and Friends)**  
+   - Split the edge file into multiple sub-maps.
+   - Optionally remove extraneous sub-map files, keeping only the most significant partition.
 
 ---
 
@@ -120,21 +154,23 @@ This task focuses on generating a road network from OpenStreetMap data for a spe
 - [**NumPy**](https://numpy.org/)
 - Standard libraries: `os`, `random`, `datetime`, `math`, etc.
 
-Make sure to install OSMnx, Folium, and other dependencies before running these scripts. For example:
+Make sure to install OSMnx, Folium, NetworkX, NumPy, and any other dependencies before running these scripts. For example:
 
-
- - pip install osmnx folium numpy networkx
-
+pip install osmnx folium numpy networkx
 
 
 
 ## General Workflow
- - The script will create:
-    - A file with all edges and their weights.
-    - A file listing connected edges.
-    - A motions file mapping objects to edges.
-    - A sensors file mapping edges to objects.
-    - An HTML map visualization of the network.
+
+ - Create the Network and the Motions
+    - Generates network edges.
+    - Finds connections.
+    - Simulates motions.
+    - Produces sensor data files.
+  
+ - Partition the Network
+    - Splits the network edges into sub-maps.
+    - Deletes unnecessary map files, retaining only the most relevant partition.
 
 
 ## Possible Improvements
