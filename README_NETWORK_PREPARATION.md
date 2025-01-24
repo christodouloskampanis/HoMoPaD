@@ -123,40 +123,28 @@ This task focuses on generating a road network from OpenStreetMap data for a spe
 Make sure to install OSMnx, Folium, and other dependencies before running these scripts. For example:
 
 
-pip install osmnx folium numpy networkx
+ - pip install osmnx folium numpy networkx
 
 
 
 
-Usage
-Clone or Copy the Repository
+## General Workflow
+ - The script will create:
+    - A file with all edges and their weights.
+    - A file listing connected edges.
+    - A motions file mapping objects to edges.
+    - A sensors file mapping edges to objects.
+    - An HTML map visualization of the network.
 
-git clone https://github.com/YourUsername/YourRepo.git
-Install Dependencies
+
+## Possible Improvements
+ - Dynamic Input/Output Handling
+   - Instead of hardcoding file paths and bounding box coordinates, consider using a config file or command-line arguments.
+ - Parallelization
+   - If the network is large, parallelizing the edge-connectivity or motion-creation steps might improve performance.
+ - Analytics
+   - You could add additional metrics—such as total distance traveled by each object, or average edge usage—to gain insights into network usage.
 
 
-pip install -r requirements.txt
-(If a requirements.txt is provided. Otherwise, install packages individually.)
-
-Run the Scripts
-
-Adjust parameters (e.g., file paths, choice_place, number of edges/objects) in the code as needed.
-Execute the main Python script containing these Task 1 functions:
-
-python main.py
-
-The script will create:
-A file with all edges and their weights.
-A file listing connected edges.
-A motions file mapping objects to edges.
-A sensors file mapping edges to objects.
-An HTML map visualization of the network.
-Possible Improvements
-Dynamic Input/Output Handling
-Instead of hardcoding file paths and bounding box coordinates, consider using a config file or command-line arguments.
-Parallelization
-If the network is large, parallelizing the edge-connectivity or motion-creation steps might improve performance.
-Analytics
-You could add additional metrics—such as total distance traveled by each object, or average edge usage—to gain insights into network usage.
-Thank you for using Task 1!
+## Thank you for using Task 1!
 Feel free to customize the scripts to suit your project’s needs and share your improvements. If you have ideas or suggestions, please open an issue or submit a pull request.
