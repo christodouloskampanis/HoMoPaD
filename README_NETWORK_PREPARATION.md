@@ -38,7 +38,7 @@ This task set focuses on:
   
 6. **Regional/Top Leader's Edge Connections**  
    - Create region-specific edge and sensor data files - Regional Leader's Edge Connections.
-   - Combine multiple region files to identify and record inter-region connections / Top Leader's Edge Connections..
+   - Combine multiple region files to identify and record inter-region connections - Top Leader's Edge Connections..
   
 
 ---
