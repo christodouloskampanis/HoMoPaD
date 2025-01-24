@@ -45,7 +45,7 @@ This task set focuses on:
 
 ## Main Functions
 
-### 1. `create_network(File_1_combined_nodes_edges_toWrite, prefix_file_Name_Picture, choice_place)`
+### 1_1. `create_network(File_1_combined_nodes_edges_toWrite, prefix_file_Name_Picture, choice_place)`
 - **Purpose**  
   Retrieves a road network from OpenStreetMap for a chosen location. Assigns weights to edges according to proximity to the network’s center.
 - **Key Steps**  
@@ -59,7 +59,7 @@ This task set focuses on:
   - Creates an HTML visualization of the network (`network_visualization.html`).  
   - Saves edges with assigned weights to `File_1_combined_nodes_edges_toWrite`.
 
-### 2. `find_connected_edges(File_1_combined_nodes_edges_toRead, File_2_edge_connections_toWrite)`
+### 1_2. `find_connected_edges(File_1_combined_nodes_edges_toRead, File_2_edge_connections_toWrite)`
 - **Purpose**  
   Identifies edges that directly connect in a sequence (i.e., the end node of one edge is the start node of another).
 - **Key Steps**  
@@ -71,7 +71,7 @@ This task set focuses on:
   - Returns the number of edges processed.  
   - Produces a file listing, for each edge, the edges that can be traversed next.
 
-### 3. `create_motions(graph, num_edges, num_objs, File_1_combined_nodes_edges_toRead, File_3_Motions_file_ToWrite)`
+### 1_3. `create_motions(graph, num_edges, num_objs, File_1_combined_nodes_edges_toRead, File_3_Motions_file_ToWrite)`
 - **Purpose**  
   Simulates objects moving through the network, assigning random paths of connected edges to each object.
 - **Key Steps**  
@@ -85,7 +85,7 @@ This task set focuses on:
 - **Output**  
   - A file containing each object’s traversed edges.
 
-### 4. `write_data_to_sensors_file(File_4_DFSMottions_toRead, File_4_sensors_toWrite, num_objs, total_edges, north, south, east, west, place_name)`
+### 1_4. `write_data_to_sensors_file(File_4_DFSMottions_toRead, File_4_sensors_toWrite, num_objs, total_edges, north, south, east, west, place_name)`
 - **Purpose**  
   Reads object-to-edge mappings from the motions file and inverts them to create edge-to-object sensor data files.
 - **Key Steps**  
@@ -99,7 +99,7 @@ This task set focuses on:
 
 ## Map Partitioning
 
-### 5. `main_partitioning_map_(File_1_combined_nodes_edges_toRead, prefix_file_Name_map, prefix_file_Name_Regional, prefix_file_Name_Picture, depth)`
+### 2_1. `main_partitioning_map_(File_1_combined_nodes_edges_toRead, prefix_file_Name_map, prefix_file_Name_Regional, prefix_file_Name_Picture, depth)`
 - **Purpose**  
   Partitions a network map into sub-maps recursively and manages files by keeping only the largest partition.
 - **Key Steps**  
@@ -107,7 +107,7 @@ This task set focuses on:
   2. Call `recursively_map_partition` to do the actual partitioning.  
   3. Remove unneeded map files, keeping only the partition with the longest numerical suffix.
 
-### 6. `recursively_map_partition(File_1_combined_nodes_edges_toRead, prefix_file_Name_map, depth, i, total_sum_of_lines, numberOfEdgesinInitialFile=None)`
+### 2_2. `recursively_map_partition(File_1_combined_nodes_edges_toRead, prefix_file_Name_map, depth, i, total_sum_of_lines, numberOfEdgesinInitialFile=None)`
 - **Purpose**  
   Recursively splits a network map by X-coordinates (left/right) until a specified `depth` is reached.
 - **Key Steps**  
@@ -116,7 +116,7 @@ This task set focuses on:
   3. Write subsets to new files.  
   4. Recursively process each subset until `depth` is exceeded.
 
-### 7. `partition_data(data, split_x, depth)`
+### 2_3. `partition_data(data, split_x, depth)`
 - **Purpose**  
   Given a list of edges, partition them into left and right subsets based on a specified `split_x`.
 - **Key Steps**  
@@ -124,7 +124,7 @@ This task set focuses on:
   2. Otherwise, compare the edge coordinates (`x1`, `x2`) with `split_x` and assign to left or right.  
   3. Handle edges that cross the midpoint by comparing distances.
 
-### 8. `delete_maps_except_longest()`
+### 2_4. `delete_maps_except_longest()`
 - **Purpose**  
   Deletes all map files in the current directory except those with the largest numerical suffix and any explicitly specified files to keep.
 - **Key Steps**  
@@ -137,7 +137,7 @@ This task set focuses on:
 
 ## Additional Region Connections (Top Leader)
 
-### 9. `create_edgeConnections_and_sensorInfo_for_each_Region(File_2_edgeconnections, File_4_sensors_FILE, prefix_file_Name_map)`
+### 3_1. `create_edgeConnections_and_sensorInfo_for_each_Region(File_2_edgeconnections, File_4_sensors_FILE, prefix_file_Name_map)`
 - **Purpose**  
   Creates edge connections and sensor information files for each region based on map files in the current directory.
 - **Key Steps**  
@@ -148,7 +148,7 @@ This task set focuses on:
 - **Output**  
   - Returns a list of region IDs (numerical suffixes) that were processed.
 
-### 10. `create_regional_edgeconnections(map_filename, File_for_RegionalEdgeConnenctios_or_RegionalSensors_toRead)`
+### 3_2. `create_regional_edgeconnections(map_filename, File_for_RegionalEdgeConnenctios_or_RegionalSensors_toRead)`
 - **Purpose**  
   Creates a filtered regional edge-connection or sensor file by matching edge IDs from a map file against a master file.
 - **Key Steps**  
@@ -159,7 +159,7 @@ This task set focuses on:
 - **Output**  
   - Creates a new file containing only the relevant edges for the specified region.
 
-### 11. `create_RegionConnections_for_Top_Leader(file_prefix="Regional_2_edgeconnections", file_extension=".txt")`
+### 3_3. `create_RegionConnections_for_Top_Leader(file_prefix="Regional_2_edgeconnections", file_extension=".txt")`
 - **Purpose**  
   Identifies and records connections between regions by analyzing the newly created regional edge-connection files.
 - **Key Steps**  
