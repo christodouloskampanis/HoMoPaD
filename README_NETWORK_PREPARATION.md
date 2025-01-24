@@ -15,31 +15,20 @@ This task set focuses on:
 
 ## Overview
 
-1. **Create the Network**  
-   - Retrieve road data from OpenStreetMap for a given bounding box (location).
-   - Assign weights to edges based on proximity to the center.
-   - Save edges with unique IDs and coordinates to a file.
-
-2. **Find Connected Edges**  
-   - Determine which edges lead directly into which others.
-   - Generate an edge-connection file.
-
-3. **Create Motions**  
-   - Simulate objects traveling across the network, each with a path of connected edges.
-   - Write these object-to-edge paths to a file.
-
-4. **Write Sensor Data**  
-   - Convert object-based paths into edge-based lists of objects passing through each edge.
-   - Write these lists to both a timestamped file and a main sensor file.
-
-5. **Map Partitioning**  
-   - Recursively split the network map into sub-maps (e.g., left/right) based on X-coordinates.
-   - Optionally remove unneeded map files, keeping only the most relevant partitions.
+ 1. Create the Network and the Motions
+    - Generates network edges.
+    - Finds connections.
+    - Simulates motions.
+    - Produces sensor data files.
   
-6. **Regional/Top Leader's Edge Connections**  
-   - Create region-specific edge and sensor data files - Regional Leader's Edge Connections.
-   - Combine multiple region files to identify and record inter-region connections - Top Leader's Edge Connections..
+ 2. Partition the Network
+    - Splits the network edges into sub-maps.
+    - Deletes unnecessary map files, retaining only the most relevant partition.
   
+ 3. Generate Regional Connections
+    - For each sub-map, create filtered edge and sensor files.
+    - Identify how different sub-maps (regions) connect.
+
 
 ---
 
@@ -186,24 +175,6 @@ Make sure to install OSMnx, Folium, NetworkX, NumPy, and any other dependencies 
 
 pip install osmnx folium numpy networkx
 
-
-
-
-## General Workflow
-
- - Create the Network and the Motions
-    - Generates network edges.
-    - Finds connections.
-    - Simulates motions.
-    - Produces sensor data files.
-  
- - Partition the Network
-    - Splits the network edges into sub-maps.
-    - Deletes unnecessary map files, retaining only the most relevant partition.
-  
- - Generate Regional Connections
-    - For each sub-map, create filtered edge and sensor files.
-    - Identify how different sub-maps (regions) connect.
 
 
 ## Possible Improvements
