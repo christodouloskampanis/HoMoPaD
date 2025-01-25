@@ -9,13 +9,16 @@ This script coordinates the **Top Leader** and **Regional Leaders** to discover 
 ## Overview
 
 1. **Top Leader Thread**  
-   - Waits for all regional leaders (threads) to signal readiness.  
-   - Collects homopath data or object information from each region.  
+   - Waits for all regional leaders (threads) to signal readiness (or no-homopath).  
+   - Collects homopath data or object information from each region (including various request modes).  
    - Attempts to discover **spanning homopaths** that cross multiple regions.  
    - Logs and saves results (e.g., cost metrics, edges used, discovered paths).
 
 2. **Regional Leader Threads** (one per region)  
-   - Each loads its own sub-map (e.g., **`map10.txt`**, **`map20.txt`**).  
+   - Each loads its own sub-map (e.g., **`map10.txt`**, **`map21.txt`**, **`map122.txt`**, etc.) according to the partition depth and region ID scheme:
+     - If `depth == 0`, then **2^0 = 1** part, so only **`map10.txt`**.  
+     - If `depth == 1`, then **2^1 = 2** parts, i.e. **`map11.txt`** and **`map21.txt`** (IDs = 1 or 2; appended with depth=1).  
+     - If `depth == 2`, then **2^2 = 4** parts. First split → IDs 1,2; then each splits again → 11,12 for part 1, and 21,22 for part 2. So files might be **`map112.txt`**, **`map122.txt`**, **`map212.txt`**, **`map222.txt`**, and so on.  
    - Discovers local homopaths or edges meeting a threshold using the **`process_region`** workflow.  
    - Sets up a **TCP socket server** to respond to Top Leader’s queries (homopath requests, object sets, etc.).  
    - Signals “ready” if homopaths are found, or “no homopaths” otherwise.
@@ -45,7 +48,13 @@ In `homopa.py`, there are several global variables and concurrency primitives:
 ### 2. **`start_Top_leader(...)`**  
 **Purpose**: The Top Leader:
 1. **Waits** for all regions (either ready or no-homopath) using a condition variable.  
-2. **Requests** and **collects** homopath data (mode=3) or unique objects (mode=4) from each region.  
+2. **Requests** and **collects** homopath data or unique objects from each region:
+   - **Mode 1**: Request a *path* (lists object IDs for a path).  
+   - **Mode 2**: Request an *edge* (lists object IDs for a single edge).  
+   - **Mode 3**: Request the *full homopath dictionary* from a region.  
+   - **Mode 4**: Request the *unique object set* for a region.  
+   - **Mode 5**: Request the total sensor integer count from a region.  
+   - **"[-1]"**: Instructs the region to shut down.  
 3. Aggregates a union of raw object sets if `raw_or_hashed == 0`.  
 4. If multiple regions have homopaths, attempts to build **spanning homopaths** across regions.  
 5. Logs final data:  
@@ -56,12 +65,7 @@ In `homopa.py`, there are several global variables and concurrency primitives:
 
 ### 3. **`send_request_to_regional_leader(...)`**  
 **Purpose**: A helper function to contact a region’s TCP server.  
-- Sends a **JSON** request specifying:
-  - Path/edge request (1 or 2)  
-  - Homopath dictionary (3)  
-  - Number of objects (4)  
-  - Total sensor integers (5)  
-  - Or **`[-1]`** for shutdown  
+- Sends a **JSON** request specifying the mode (1=path, 2=edge, 3=homopath dictionary, 4=unique objects, 5=total integers, or `[-1]`=shutdown).  
 - Receives and decodes the response (dictionary, string, or integer).
 
 ### 4. **`start_regional_leader(...)`**  
@@ -91,13 +95,13 @@ Each **Regional Leader**:
 **Recursive** procedure:
 - Builds a matrix (rows = current paths/edges, columns = possible next edges).  
 - **Intersection** threshold check:
-  - Raw data => `(|intersection| / total_obj_count) >= threshold`.  
-  - Hashed data => `(|intersection| / permutations) >= threshold`.  
-- For **n=1**, single edges. For **n >= 2**, tries to extend existing paths with new edges.  
-- Continues until no new paths or recursion **limit** is reached.
+  - **Raw data** => \((|\text{intersection}| / \text{total\_obj\_count}) \geq \text{threshold}\).  
+  - **Hashed data** => \((|\text{intersection}| / \text{permutations}) \geq \text{threshold}\).  
+- **For** `n=1`: searching for **homoedges**. Here, each sensor uses an “extra counter” (Counter Cardinality MinHash — CCM approach), sending the minhash signature **plus** an integer for the real number of objects. Then we compare \(\frac{\text{intersection}}{\text{Cohen's global estimate}}\).  
+- **For** `n >= 2`: tries to extend existing paths with new edges (so building multi-edge homopaths).  
+- Continues until no new paths or a recursion limit is reached.
 
-### 8. **Minhash & Cohen’s Method**  
-**_Find_Cardinality_Cohen(...)** extracts minhash signatures from sensor lines, then **`_Cohen(...)`** applies the formula:
+```markdown
 Maps to:
 - `raw_or_hashed=0`
 - `seed=42`
@@ -128,6 +132,16 @@ The script will log progress, spawn threads, and produce a final integer result 
 - **`output.txt`**: The final integer result, for the calling script (`experiment_creator.py`).
 
 ---
+
+## Dependencies
+
+- **`numpy`**, **`pandas`**, **`networkx`**, **`matplotlib`**  
+- Standard libraries: `os`, `threading`, `json`, `socket`, etc.
+
+Ensure these are installed before running, e.g.:
+
+pip install numpy pandas networkx matplotlib
+
 
 ## Dependencies
 
