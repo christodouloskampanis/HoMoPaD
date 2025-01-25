@@ -31,6 +31,7 @@ This script coordinates the **Top Leader** and **Regional Leaders** to discover 
    - The final output from Top Leader is an integer (e.g., how many regions discovered homopaths).  
    - Multiple log files track the homopath structure, cost, and other statistics.
 
+
 ---
 
 ## Main Sections & Key Functions
@@ -65,7 +66,12 @@ In `homopa.py`, there are several global variables and concurrency primitives:
 
 ### 3. **`send_request_to_regional_leader(...)`**  
 **Purpose**: A helper function to contact a region’s TCP server.  
-- Sends a **JSON** request specifying the mode (1=path, 2=edge, 3=homopath dictionary, 4=unique objects, 5=total integers, or `[-1]`=shutdown).  
+- Sends a **JSON** request specifying:
+  - Path/edge request (1 or 2)  
+  - Homopath dictionary (3)  
+  - Number of objects (4)  
+  - Total sensor integers (5)  
+  - Or **`[-1]`** for shutdown  
 - Receives and decodes the response (dictionary, string, or integer).
 
 ### 4. **`start_regional_leader(...)`**  
@@ -101,7 +107,27 @@ Each **Regional Leader**:
 - **For** `n >= 2`: tries to extend existing paths with new edges (so building multi-edge homopaths).  
 - Continues until no new paths or a recursion limit is reached.
 
-```markdown
+### 8. **Minhash & Cohen’s Method**  
+**`_Find_Cardinality_Cohen(...)`** extracts minhash signatures from sensor lines, then **`_Cohen(...)`** applies the formula:
+- cardinality = num_perm / ((sum_of_min_values / _max_hash)) - 1
+- This estimates the union cardinality of objects in hashed data.
+
+### 9. **`main(...)`** (Script Entry Point)  
+- **Parses** command-line arguments.  
+- If `threshold <= 0.01`, returns a default result (1). Otherwise:
+  - Possibly builds a global network, motions, sensor data.  
+  - Partitions the map if `depth > 0`.  
+  - Spawns **Top Leader** and **Regional Leaders** as threads.  
+  - Waits for them to complete.  
+  - Writes **`output.txt`** with the final integer result (so `experiment_creator.py` can read it).
+
+---
+
+## Usage
+
+**Example**:
+python homopa.py 0 42 1 50 100 10 0.2 1 0 1.0 123 0 0 5 "folderRepeatExp"
+
 Maps to:
 - `raw_or_hashed=0`
 - `seed=42`
@@ -143,18 +169,6 @@ Ensure these are installed before running, e.g.:
 pip install numpy pandas networkx matplotlib
 
 
-## Dependencies
-
-- **`numpy`**, **`pandas`**, **`networkx`**, **`matplotlib`**  
-- Standard libraries: `os`, `threading`, `json`, `socket`, etc.
-
-Ensure these are installed before running, e.g.:
-
-pip install numpy pandas networkx matplotlib
-
-
-
-
 ## Potential Extensions
 - Scalability: For very large networks, consider asynchronous concurrency or distributed architectures.
 - Intersection Strategy: Enhance the hashing approach or explore alternative cardinality estimation methods.
@@ -165,3 +179,4 @@ pip install numpy pandas networkx matplotlib
 homopa.py orchestrates a Top Leader and multiple Regional Leaders for local path discovery. It supports both raw and hashed data with minhash cardinality checks, building homopaths recursively and aggregating them for cross-region “spanning paths.” The main function is typically invoked by experiment_creator.py with a set of command-line arguments, generating detailed logs and a final integer result.
 
 Thank you for using HoMoPaD! Please open an issue or a pull request for improvements or questions.
+
