@@ -159,14 +159,18 @@ The script will log progress, spawn threads, and produce a final integer result 
 
 ---
 
+
 ## Dependencies
 
-- **`numpy`**, **`pandas`**, **`networkx`**, **`matplotlib`**  
-- Standard libraries: `os`, `threading`, `json`, `socket`, etc.
+- [**OSMnx**](https://osmnx.readthedocs.io/)
+- [**Folium**](https://python-visualization.github.io/folium/)
+- [**NetworkX**](https://networkx.org/)
+- [**NumPy**](https://numpy.org/)
+- Standard libraries: `os`, `random`, `datetime`, `math`, `re`, etc.
 
-Ensure these are installed before running, e.g.:
+Make sure to install OSMnx, Folium, NetworkX, NumPy, and any other dependencies before running these scripts. For example:
+pip install osmnx folium numpy networkx
 
-pip install numpy pandas networkx matplotlib
 
 
 ## Potential Extensions
