@@ -135,17 +135,19 @@ The script will log progress, spawn threads, and produce a final integer result 
 - Standard libraries: `os`, `threading`, `json`, `socket`, etc.
 
 Ensure these are installed before running, e.g.:
-```bash
+
 pip install numpy pandas networkx matplotlib
 
 
 
 
 ## Potential Extensions
-Scalability: For very large networks, consider asynchronous concurrency or distributed architectures.
-Intersection Strategy: Enhance the hashing approach or explore alternative cardinality estimation methods.
-Visualization: Provide more debug plots of multi-edge homopaths or color-coded spanning paths.
-Conclusion
+- Scalability: For very large networks, consider asynchronous concurrency or distributed architectures.
+- Intersection Strategy: Enhance the hashing approach or explore alternative cardinality estimation methods.
+- Visualization: Provide more debug plots of multi-edge homopaths or color-coded spanning paths.
+
+
+## Conclusion
 homopa.py orchestrates a Top Leader and multiple Regional Leaders for local path discovery. It supports both raw and hashed data with minhash cardinality checks, building homopaths recursively and aggregating them for cross-region “spanning paths.” The main function is typically invoked by experiment_creator.py with a set of command-line arguments, generating detailed logs and a final integer result.
 
 Thank you for using HoMoPaD! Please open an issue or a pull request for improvements or questions.
