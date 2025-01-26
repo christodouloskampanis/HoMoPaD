@@ -138,7 +138,6 @@ Maps to:
 - `threshold=0.2`
 - `depth=1`
 - `help_for_jaccard=0`
-- `factor_forDBscan=1.0`
 - `choice_place=123`
 - `run_once=0`
 - `repeat_experiment=0`
