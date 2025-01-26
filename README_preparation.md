@@ -176,7 +176,7 @@ This task set focuses on:
    - [**NetworkX**](https://networkx.org/)
    - [**NumPy**](https://numpy.org/)
 
-Before running, ensure, that all Third-Party Libraries are installed (e.g., `pip install **OSMnx**`) and the listed standard libraries are available in your Python environment.
+Before running, ensure all third-party libraries are installed (e.g., `pip install **OSMnx**`) and that the listed standard libraries are available in your Python environment.
 
 
 
