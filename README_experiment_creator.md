@@ -89,11 +89,19 @@ python experiment_creator.py
 - **`Current_Experiment_Top_Leader_*`**: If the top leader logs are also kept in the same directory, they may be archived.  
 - **`Experiment_<...>`** Folders: Created for each final run, storing relevant logs, sensors, and motion files.
 
+---
+
+
+
 ## Dependencies
 
-- [**datasketch**](https://github.com/ekzhu/datasketch) (provides **MinHash** functionality)
-- Standard libraries:  
+- **Standard Libraries**:  
   - **`subprocess`**, **`time`**, **`csv`**, **`os`**, **`shutil`**, **`datetime`**, **`re`**, **`random`**
+  - 
+- **Third-Party / Data Science**:
+   - [**datasketch**](https://github.com/ekzhu/datasketch) (provides **MinHash** functionality)
+   - 
+
 Before running, ensure **datasketch** is installed (e.g., `pip install datasketch`) and the listed standard libraries are available in your Python environment.
 
 
