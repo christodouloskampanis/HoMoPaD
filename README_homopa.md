@@ -172,7 +172,6 @@ The script will log progress, spawn threads, and produce a final integer result 
   - `os`, `time`, `re`, `socket`, `json`, `threading`, `sys`, `shutil`, `queue`
 
 - **Third-Party / Data Science**:
-  - [**datasketch**](https://github.com/ekzhu/datasketch) *(provides MinHash functionality)*
   - [**pandas**](https://pandas.pydata.org/) *(for DataFrame manipulation)*
   - [**networkx**](https://networkx.org/) *(for graph operations)*
   - [**matplotlib**](https://matplotlib.org/) *(for plotting, with Agg backend)*
@@ -180,6 +179,7 @@ The script will log progress, spawn threads, and produce a final integer result 
 
 Before running, ensure all third-party libraries are installed (e.g., `pip install **networkx**`) and that the listed standard libraries are available in your Python environment.
 
+use this  : pip install networkx matplotlib numpy
 
 
 ## Potential Extensions
