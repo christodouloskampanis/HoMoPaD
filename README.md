@@ -21,7 +21,7 @@ Below is an overview of the **three main Python scripts** in this repository and
 
 ### Key Points
 
-- **RAW & Hashed Flows**: Runs a **RAW** pass first. If homopaths exist, continues with **hashed** passes for multiple compression ratios (±10% tolerance).  
+- **RAW & Hashed Flows**: Runs a **RAW** pass first. If homopaths exist, continues with **hashed** passes for multiple compression ratios (±X% user's tolerance).  
 - **Repeat Experiments**: If `repeat_experiment=1`, can re-run an older experiment folder (e.g. `Experiment_...`) to replicate or tweak seeds/thresholds.  
 - **Archiving**: After finishing for a given threshold/param set, logs and sensor data are **moved** into a new experiment folder named with the experiment parameters.
 
