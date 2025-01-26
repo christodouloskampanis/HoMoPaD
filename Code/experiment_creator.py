@@ -593,7 +593,7 @@ def main_function():
         folders_for_specific_repetition_for_checking_pairs = [
             'Experiment_181_10000_60_15_16_20250126131739'
         ]
-        repeat_experiment = 1
+        repeat_experiment = 0
 
         # If 1, the code includes an offline step analyzing discovered pairs as 
         # part of homopath accuracy (not fully shown).
