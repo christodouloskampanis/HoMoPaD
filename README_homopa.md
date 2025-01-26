@@ -176,7 +176,6 @@ The script will log progress, spawn threads, and produce a final integer result 
   - **networkx** (for graph operations)
   - **matplotlib** (for plotting, with Agg backend)
   - **numpy** (array handling, numeric computations)
-  - **scipy** (distance metrics from `scipy.spatial.distance`)
 
 
 ## Potential Extensions
