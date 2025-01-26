@@ -76,6 +76,44 @@ This script coordinates the **high-level experiment workflow**, calling **`homop
 ## Usage
 
 Below is a simplified example of calling **`experiment_creator.py`** directly:
-
-```bash
 python experiment_creator.py
+( No additional command-line arguments are typically required because main_function() is invoked automatically at the end of the file. Parameters such as my_threshold_levels, my_numo_objs_levels, or repeat_experiment can be customized inside the script. )
+
+
+
+
+## Output Files & Logs
+
+- **`RESULTS.txt`, `ResultsOfExperiments.txt`**: Summaries or logs of raw/hashing runs.  
+- **`Current_Experiment_Compare_RAW_HASh_NEW_formatted_paths_*.txt`**: Compare logs for pairs or path data.  
+- **`Current_Experiment_Top_Leader_*`**: If the top leader logs are also kept in the same directory, they may be archived.  
+- **`Experiment_<...>`** Folders: Created for each final run, storing relevant logs, sensors, and motion files.
+
+## Dependencies
+
+- [**OSMnx**](https://osmnx.readthedocs.io/)
+- [**Folium**](https://python-visualization.github.io/folium/)
+- [**NetworkX**](https://networkx.org/)
+- [**NumPy**](https://numpy.org/)
+- Standard libraries: `os`, `random`, `datetime`, `math`, `re`, etc.
+
+Make sure to install or verify the needed packages (e.g., `pip install osmnx folium numpy networkx`) before running.
+
+## Potential Extensions
+
+- **Advanced Scheduling**: Automate multiple runs with different seeds or thresholds over HPC clusters.  
+- **Adaptive Partitioning**: Instead of a fixed `depth`, dynamically partition or skip if certain conditions are met.  
+- **Accuracy Metrics**: Further compare raw vs hashed discovered homopaths by writing additional aggregator scripts.
+
+## Conclusion
+
+The **`experiment_creator.py`** script is your **top-level experiment manager**. It calls **`homopa.py`** under multiple parameter scenarios, organizes the results into new folders, and optionally replays older experiments by copying files. For deeper homopath detection logic, see **`homopa.py`**. Feel free to tailor the ranges for thresholds, compression levels, or object counts to your dataset. 
+
+**Thank you for using HoMoPaD’s Experiment Creator!** Open an issue or pull request for improvements or questions.
+
+
+
+
+
+
+
