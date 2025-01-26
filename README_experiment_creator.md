@@ -103,6 +103,7 @@ python experiment_creator.py
 
 Before running, ensure **datasketch** is installed (e.g., `pip install datasketch`) and the listed standard libraries are available in your Python environment.
 
+use this  : pip install datasketch
 
 ## Potential Extensions
 
