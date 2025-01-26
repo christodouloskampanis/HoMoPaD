@@ -178,14 +178,7 @@ This task set focuses on:
 
 Before running, ensure all third-party libraries are installed (e.g., `pip install **OSMnx**`) and that the listed standard libraries are available in your Python environment.
 
-
-
-
-- Standard libraries: `os`, `random`, `datetime`, `math`, `re`, etc.
-
-Make sure to install OSMnx, Folium, NetworkX, NumPy, and any other dependencies before running these scripts. For example:
-
-pip install osmnx folium numpy networkx
+use this  : pip install osmnx folium numpy networkx
 
 
 
