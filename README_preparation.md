@@ -164,12 +164,23 @@ This task set focuses on:
 
 ---
 
+
 ## Dependencies
 
-- [**OSMnx**](https://osmnx.readthedocs.io/)
-- [**Folium**](https://python-visualization.github.io/folium/)
-- [**NetworkX**](https://networkx.org/)
-- [**NumPy**](https://numpy.org/)
+- **Standard Libraries**:  
+  - **`matplotlib`**, **`sys`**, **`os`**, **`shutil`**, **`json`**, **`re`**, **`random`**
+
+- **Third-Party / Data Science**:
+   - [**OSMnx**](https://osmnx.readthedocs.io/)
+   - [**Folium**](https://python-visualization.github.io/folium/)
+   - [**NetworkX**](https://networkx.org/)
+   - [**NumPy**](https://numpy.org/)
+
+Before running, ensure, that all Third-Party Libraries are installed (e.g., `pip install **OSMnx**`) and the listed standard libraries are available in your Python environment.
+
+
+
+
 - Standard libraries: `os`, `random`, `datetime`, `math`, `re`, etc.
 
 Make sure to install OSMnx, Folium, NetworkX, NumPy, and any other dependencies before running these scripts. For example:
