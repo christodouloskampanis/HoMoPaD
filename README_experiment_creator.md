@@ -91,13 +91,11 @@ python experiment_creator.py
 
 ## Dependencies
 
-- [**OSMnx**](https://osmnx.readthedocs.io/)
-- [**Folium**](https://python-visualization.github.io/folium/)
-- [**NetworkX**](https://networkx.org/)
-- [**NumPy**](https://numpy.org/)
-- Standard libraries: `os`, `random`, `datetime`, `math`, `re`, etc.
+- [**datasketch**](https://github.com/ekzhu/datasketch) (provides **MinHash** functionality)
+- Standard libraries:  
+  - **`subprocess`**, **`time`**, **`csv`**, **`os`**, **`shutil`**, **`datetime`**, **`re`**, **`random`**
+Before running, ensure **datasketch** is installed (e.g., `pip install datasketch`) and the listed standard libraries are available in your Python environment.
 
-Make sure to install or verify the needed packages (e.g., `pip install osmnx folium numpy networkx`) before running.
 
 ## Potential Extensions
 
@@ -110,6 +108,15 @@ Make sure to install or verify the needed packages (e.g., `pip install osmnx fol
 The **`experiment_creator.py`** script is your **top-level experiment manager**. It calls **`homopa.py`** under multiple parameter scenarios, organizes the results into new folders, and optionally replays older experiments by copying files. For deeper homopath detection logic, see **`homopa.py`**. Feel free to tailor the ranges for thresholds, compression levels, or object counts to your dataset. 
 
 **Thank you for using HoMoPaD’s Experiment Creator!** Open an issue or pull request for improvements or questions.
+
+
+
+
+
+
+
+
+
 
 
 
