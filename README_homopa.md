@@ -6,6 +6,8 @@ This script coordinates the **Top Leader** and **Regional Leaders** to discover 
 
 ---
 
+
+
 ## Overview
 
 1. **Top Leader Thread**  
@@ -33,6 +35,8 @@ This script coordinates the **Top Leader** and **Regional Leaders** to discover 
 
 
 ---
+
+
 
 ## Main Sections & Key Functions
 
@@ -123,6 +127,7 @@ Each **Regional Leader**:
 
 ---
 
+
 ## Usage
 
 **Example**:
@@ -148,6 +153,7 @@ The script will log progress, spawn threads, and produce a final integer result 
 
 ---
 
+
 ## Output Files & Logs
 
 - **`ResultsOfExperiments.txt`**: Summaries of homopath discoveries, times, etc.  
@@ -159,17 +165,18 @@ The script will log progress, spawn threads, and produce a final integer result 
 ---
 
 
+
 ## Dependencies
 
-- [**OSMnx**](https://osmnx.readthedocs.io/)
-- [**Folium**](https://python-visualization.github.io/folium/)
-- [**NetworkX**](https://networkx.org/)
-- [**NumPy**](https://numpy.org/)
-- Standard libraries: `os`, `random`, `datetime`, `math`, `re`, etc.
+- **Standard Libraries**:
+  - `os`, `time`, `re`, `socket`, `json`, `threading`, `sys`, `shutil`, `queue`
 
-Make sure to install OSMnx, Folium, NetworkX, NumPy, and any other dependencies before running these scripts. For example:
-pip install osmnx folium numpy networkx
-
+- **Third-Party / Data Science**:
+  - **pandas** (for DataFrame manipulation)
+  - **networkx** (for graph operations)
+  - **matplotlib** (for plotting, with Agg backend)
+  - **numpy** (array handling, numeric computations)
+  - **scipy** (distance metrics from `scipy.spatial.distance`)
 
 
 ## Potential Extensions
