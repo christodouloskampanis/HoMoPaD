@@ -178,6 +178,9 @@ The script will log progress, spawn threads, and produce a final integer result 
   - **numpy** (array handling, numeric computations)
 
 
+Before running, ensure Third-Party Libraries are installed (e.g., pip install networkx) and the listed standard libraries are available in your Python environment.
+
+
 ## Potential Extensions
 - Scalability: For very large networks, consider asynchronous concurrency or distributed architectures.
 - Intersection Strategy: Enhance the hashing approach or explore alternative cardinality estimation methods.
