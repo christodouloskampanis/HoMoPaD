@@ -178,7 +178,7 @@ The script will log progress, spawn threads, and produce a final integer result 
   - [**matplotlib**](https://matplotlib.org/) *(for plotting, with Agg backend)*
   - [**numpy**](https://numpy.org/) *(array handling, numeric computations)*
 
-Before running, ensure all third-party libraries are installed (e.g., `pip install datasketch pandas networkx matplotlib numpy`) and that the listed standard libraries are available in your Python environment.
+Before running, ensure all third-party libraries are installed (e.g., `pip install **networkx**`) and that the listed standard libraries are available in your Python environment.
 
 
 
